@@ -21,7 +21,7 @@ addons:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -y ca-certificates python-urllib3 python-openssl python-pyasn1
+  - sudo apt-get -y install ca-certificates python-urllib3 python-openssl python-pyasn1
   - sudo pip install ndg-httpsclient
 
 install:
