@@ -1,0 +1,34 @@
+---
+# Install NodeJS on RedHat
+
+- name: import rpm key (CentOS < 7)
+  rpm_key:
+    key: "http://{{ nodejs_rpm_key }}"
+    state: present
+  when: ansible_distribution_major_version|int < 7
+
+- name: import rpm key (CentOS 7+)
+  rpm_key:
+    key: "https://{{ nodejs_rpm_key }}"
+    state: present
+  when: ansible_distribution_major_version|int >= 7
+
+- name: add repositories (CentOS < 7).
+  yum:
+    name: "http://{{ nodejs_rpm_url }}"
+    state: present
+  when: ansible_distribution_major_version|int < 7
+
+- name: add repositories (CentOS 7+).
+  yum:
+    name: "https://{{ nodejs_rpm_url }}"
+    state: present
+  when: ansible_distribution_major_version|int >= 7
+
+- name: install package
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nodejs
+    - npm

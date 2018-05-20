@@ -1,0 +1,13 @@
+---
+# vars file for nodejs
+
+# Debian
+
+nodejs_apt_repo: 'deb https://deb.nodesource.com/{{ nodejs_version }} {{ ansible_distribution_release }} main'
+nodejs_apt_key: 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key'
+
+# RedHat
+
+nodejs_rpm_path: '{{ "pub_" + nodejs_version if nodejs_version != "0.10" else "pub" }}'
+nodejs_rpm_key: 'rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL'
+nodejs_rpm_url: 'rpm.nodesource.com/{{ nodejs_rpm_path }}/el/{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/nodesource-release-el{{ ansible_distribution_major_version }}-1.noarch.rpm'

@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - nodejs
+  vars:
+    nodejs_version: 10.x
+    npm_packages:
+      - http-server
+      - typescript
+      - webpack
+      - less

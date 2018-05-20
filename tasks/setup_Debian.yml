@@ -1,0 +1,23 @@
+---
+# Install NodeJS on Debian
+
+- name: "install HTTPS transport"
+  apt:
+    name: "apt-transport-https"
+    state: present
+
+- name: add public key
+  apt_key:
+    url: "{{ nodejs_apt_key }}"
+    state: present
+
+- name: add repository
+  apt_repository:
+    repo: "{{ nodejs_apt_repo }}"
+    state: present
+    update_cache: yes
+
+- name: install package
+  apt:
+    pkg: "nodejs={{ nodejs_version|regex_replace('x', '') }}*"
+    state: present
