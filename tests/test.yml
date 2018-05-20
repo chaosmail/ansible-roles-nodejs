@@ -1,8 +1,9 @@
 ---
 - hosts: localhost
   remote_user: root
+  become: true
   roles:
-    - nodejs
+    - ansible-roles-nodejs
   vars:
     nodejs_version: 10.x
     npm_packages:
