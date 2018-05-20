@@ -15,12 +15,16 @@ matrix:
 # Install ansible
 addons:
   apt:
+    update: true
     packages:
       - python-pip
 
+before_install:
+  - sudo apt-get -qq update
+
 install:
   # Install ansible
-  - pip install ansible
+  - sudo pip install ansible
 
   # Check ansible version
   - ansible --version
