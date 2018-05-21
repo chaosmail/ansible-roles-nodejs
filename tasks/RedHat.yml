@@ -33,6 +33,7 @@
   yum:
     name: "{{ item }}"
     enablerepo: "{{ nodejs_repo_name }}"
+    disablerepo: epel
     state: present
   become: true
   with_items:

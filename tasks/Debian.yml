@@ -10,7 +10,7 @@
 
 - name: "install pip"
   apt:
-    name: "python-pip"
+    name: "python-pip python-dev libffi-dev libssl-dev"
     state: present
   become: true
   when: ansible_distribution_major_version|int <= 18
@@ -21,7 +21,7 @@
     state: present
   with_items:
     - urllib3
-    - pyOpenSSL
+    - pyopenssl
     - ndg-httpsclient
     - pyasn1
   become: true
