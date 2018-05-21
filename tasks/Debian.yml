@@ -15,10 +15,11 @@
   become: true
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 18
 
-- name: install pip
-  apt:
-    name: "python-dev"
+- name: upgrade setuptools
+  pip:
+    name: "setuptools"
     state: present
+    extra_args: --upgrade
   become: true
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 16
 
