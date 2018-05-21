@@ -8,30 +8,26 @@
     update_cache: true
   become: true
 
-- name: install pip
-  apt:
-    name: "python-pip"
-    state: present
-  become: true
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 18
-
-- name: upgrade setuptools
-  pip:
-    name: "setuptools"
-    state: present
-    extra_args: --upgrade
-  become: true
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 16
-
-- name: python modules to perform SNI verification
-  pip:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - urllib3
-    - pyopenssl
-    - ndg-httpsclient
-    - pyasn1
+- name: install python compatibility tools
+  block:
+    - apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - python-pip
+        - python-dev
+    - pip:
+        name: "setuptools"
+        extra_args: --upgrade
+        state: present
+    - pip:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - urllib3
+        - pyopenssl
+        - ndg-httpsclient
+        - pyasn1
   become: true
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 18
 
