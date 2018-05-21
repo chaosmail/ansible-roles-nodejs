@@ -18,3 +18,7 @@ ansible --version;
 # Run the test.yml playbook
 cd /root/$ROLE;
 ansible-playbook tests/test.yml -i tests/inventory;
+
+# Check if NodeJS and NPM are installed
+node --version;
+npm --version;
