@@ -1,42 +1,33 @@
 ---
+sudo: required
+
 language: python
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-      sudo: required
-      python: 2.7
-    - os: linux
-      dist: xenial
-      sudo: required
-      python: 2.7
-
-# Install ansible
 addons:
   apt:
-    update: true
     packages:
-      - python-pip
+      - docker-ce
+
+env:
+  - ROLE=nodejs IMG=geerlingguy/docker-ubuntu1404-ansible
+  - ROLE=nodejs IMG=geerlingguy/docker-ubuntu1604-ansible
+  - ROLE=nodejs IMG=geerlingguy/docker-ubuntu1804-ansible
+  - ROLE=nodejs IMG=geerlingguy/docker-centos6-ansible
+  - ROLE=nodejs IMG=geerlingguy/docker-centos7-ansible
+  - ROLE=nodejs IMG=geerlingguy/docker-debian8-ansible
+  - ROLE=nodejs IMG=geerlingguy/docker-debian9-ansible
+
+services:
+  - docker
 
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get -y install ca-certificates python-urllib3 python-openssl python-pyasn1
-  - sudo pip install ndg-httpsclient
-
-install:
-  # Install ansible
-  - sudo pip install ansible
-
-  # Check ansible version
-  - ansible --version
-
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../\nhost_key_checking=False' > ansible.cfg
+  - docker --version
+  - docker pull $IMG
 
 script:
-  # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory
+  - docker run -it -v "$(pwd):/root/$ROLE"
+      -e ROLE=$ROLE -e ANSIBLE=$ANSIBLE
+      $IMG /bin/sh /root/$ROLE/tests/run_test.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

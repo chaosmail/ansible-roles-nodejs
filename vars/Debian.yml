@@ -1,0 +1,5 @@
+---
+# vars file for nodejs (Debian)
+
+nodejs_apt_repo: 'deb https://deb.nodesource.com/node_{{ nodejs_version }} {{ ansible_distribution_release }} main'
+nodejs_apt_key: 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key'

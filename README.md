@@ -5,7 +5,16 @@ Node.JS
 
 Ansible role to install nodejs, npm and global npm packages on CentOS or Ubuntu.
 
-Inspired by:
+This role is tested via TravisCI on following platforms:
+- Ubuntu 18.04 LTS (bionic)
+- Ubuntu 16.04 LTS (xenial)
+- Ubuntu 14.04 LTS (trusty)
+- CentOS 7
+- CentOS 6
+- Debian 8 (Jessie)
+- Debian 9 (Stretch)
+
+This role is inspired by:
 - https://github.com/geerlingguy/ansible-role-nodejs
 - https://github.com/skandyla/ansible-role-nodejs
 
