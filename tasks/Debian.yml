@@ -5,19 +5,36 @@
   apt:
     name: "apt-transport-https"
     state: present
+    update_cache: true
+  become: true
+
+- name: python modules to perform SNI verification
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - urllib3
+    - pyOpenSSL
+    - ndg-httpsclient
+    - pyasn1
+  become: true
+  when: ansible_distribution_major_version|int <= 18
 
 - name: add public key
   apt_key:
     url: "{{ nodejs_apt_key }}"
     state: present
+  become: true
 
 - name: add repository
   apt_repository:
     repo: "{{ nodejs_apt_repo }}"
     state: present
     update_cache: yes
+  become: true
 
 - name: install package
   apt:
     pkg: "nodejs={{ nodejs_version|regex_replace('x', '') }}*"
     state: present
+  become: true
