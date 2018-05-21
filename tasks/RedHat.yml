@@ -38,4 +38,3 @@
   become: true
   with_items:
     - nodejs
-    - npm

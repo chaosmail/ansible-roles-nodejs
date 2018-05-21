@@ -1,19 +1,26 @@
 ---
 # Install NodeJS on Debian
 
-- name: "install HTTPS transport"
+- name: install HTTPS transport
   apt:
     name: "apt-transport-https"
     state: present
     update_cache: true
   become: true
 
-- name: "install pip"
+- name: install pip
   apt:
-    name: "python-pip python-dev libffi-dev libssl-dev"
+    name: "python-pip"
     state: present
   become: true
-  when: ansible_distribution_major_version|int <= 18
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 18
+
+- name: install pip
+  apt:
+    name: "python-dev libssl-dev"
+    state: present
+  become: true
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 16
 
 - name: python modules to perform SNI verification
   pip:
@@ -25,7 +32,7 @@
     - ndg-httpsclient
     - pyasn1
   become: true
-  when: ansible_distribution_major_version|int <= 18
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 18
 
 - name: add public key
   apt_key:
