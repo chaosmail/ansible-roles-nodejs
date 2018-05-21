@@ -8,28 +8,26 @@
     update_cache: true
   become: true
 
-- name: install python compatibility tools
+- name: add python-openssl for SNI support on Ubuntu 14.04
   block:
     - apt:
         name: "{{ item }}"
         state: present
+        update_cache: true
       with_items:
         - python-pip
-        - python-dev
+        - python-openssl
+        - python-pyasn1
     - pip:
-        name: "setuptools"
-        extra_args: --upgrade
-        state: present
+        name: setuptools
+        state: latest
     - pip:
-        name: "{{ item }}"
+        name: ndg-httpsclient
         state: present
-      with_items:
-        - urllib3
-        - pyopenssl
-        - ndg-httpsclient
-        - pyasn1
   become: true
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int < 18
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version == '14.04'
 
 - name: add public key
   apt_key:
