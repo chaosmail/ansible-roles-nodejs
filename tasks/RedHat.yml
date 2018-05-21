@@ -32,8 +32,8 @@
 - name: install package
   yum:
     name: "{{ item }}"
-    state: present
     enablerepo: "{{ nodejs_repo_name }}"
+    state: present
   become: true
   with_items:
     - nodejs

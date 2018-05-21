@@ -10,7 +10,7 @@
 
 - name: "install pip"
   apt:
-    name: "pip"
+    name: "python-pip"
     state: present
   become: true
   when: ansible_distribution_major_version|int <= 18
