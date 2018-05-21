@@ -1,0 +1,49 @@
+---
+# Install NodeJS on Debian
+
+- name: install HTTPS transport
+  apt:
+    name: "apt-transport-https"
+    state: present
+    update_cache: true
+  become: true
+
+- name: add python-openssl for SNI support on Ubuntu 14.04
+  block:
+    - apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      with_items:
+        - python-pip
+        - python-openssl
+        - python-pyasn1
+    - pip:
+        name: setuptools
+        state: latest
+    - pip:
+        name: ndg-httpsclient
+        state: present
+  become: true
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version == '14.04'
+
+- name: add public key
+  apt_key:
+    url: "{{ nodejs_apt_key }}"
+    state: present
+  become: true
+
+- name: add repository
+  apt_repository:
+    repo: "{{ nodejs_apt_repo }}"
+    state: present
+    update_cache: yes
+  become: true
+
+- name: install package
+  apt:
+    pkg: "nodejs={{ nodejs_version|regex_replace('x', '') }}*"
+    state: present
+  become: true

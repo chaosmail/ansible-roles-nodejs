@@ -1,8 +1,11 @@
 ---
 # tasks file for nodejs
 
+- name: import os specific vars
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - name: import os specific setup
-  include_tasks: "setup_{{ ansible_os_family }}.yml"
+  include_tasks: "{{ ansible_os_family }}.yml"
 
 - name: install global npm packages
   npm:
@@ -10,4 +13,5 @@
     version: "{{ item.version | default('latest') }}"
     global: yes
     state: latest
+  become: true
   with_items: "{{ npm_packages }}"

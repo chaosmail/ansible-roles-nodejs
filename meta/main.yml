@@ -16,7 +16,7 @@ galaxy_info:
   # - CC-BY
   license: MIT
   
-  min_ansible_version: 1.2
+  min_ansible_version: 2.5
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
@@ -42,7 +42,7 @@ galaxy_info:
   #  - 6.0
   #  - 6.1
   #  - 6.2
-  #- name: Fedora
+  # - name: Fedora
   #  versions:
   #  - all
   #  - 16
@@ -152,9 +152,9 @@ galaxy_info:
   #  - 9.3
   - name: Ubuntu
     versions:
-    - all
+  #  - all
   #  - artful
-  #  - bionic
+    - bionic
   #  - lucid
   #  - maverick
   #  - natty
@@ -163,23 +163,23 @@ galaxy_info:
   #  - quantal
   #  - raring
   #  - saucy
-  #  - trusty
+    - trusty
   #  - utopic
   #  - vivid
   #  - wily
-  #  - xenial
+    - xenial
   #  - yakkety
   #  - zesty
   - name: Debian
     versions:
-    - all
+  #  - all
   #  - buster
   #  - etch
-  #  - jessie
+    - jessie
   #  - lenny
   #  - sid
   #  - squeeze
-  #  - stretch
+    - stretch
   #  - wheezy
   #- name: Alpine
   #  versions:
