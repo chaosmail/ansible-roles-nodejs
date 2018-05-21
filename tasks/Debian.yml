@@ -8,6 +8,13 @@
     update_cache: true
   become: true
 
+- name: "install pip"
+  apt:
+    name: "pip"
+    state: present
+  become: true
+  when: ansible_distribution_major_version|int <= 18
+
 - name: python modules to perform SNI verification
   pip:
     name: "{{ item }}"
